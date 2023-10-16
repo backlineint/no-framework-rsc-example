@@ -14,6 +14,7 @@ const viteDevServer = await createViteDevServer({
 const html = await readFile("./index.html", "utf-8");
 const ssr = createMiddleware(async ({ request }) => {
   if (request.headers.get("accept").includes("text/x-component")) {
+    console.log('RSC Rendering', request.url);
     try {
       const { render } = await viteDevServer.ssrLoadModule("./rsc.jsx");
       return new Response(await render(), {
@@ -30,11 +31,13 @@ const ssr = createMiddleware(async ({ request }) => {
       });
     }
   }
+  console.log('Standard Response Rendering', request.url);
   return new Response(
     await viteDevServer.transformIndexHtml(request.url, html),
     {
       headers: {
         "content-type": "text/html",
+        "custom-header": "Parent Response",
       },
     }
   );

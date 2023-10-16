@@ -6,7 +6,7 @@ async function delay(ms) {
 }
 
 async function App() {
-  await delay(500);
+  await delay(5000);
   return (
     <>
       <h1>Hello World!</h1>

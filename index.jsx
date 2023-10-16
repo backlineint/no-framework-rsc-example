@@ -12,14 +12,21 @@ function App() {
         },
       })
     );
+    console.log('RSC Render Started', rsc);
   }
-
+  else {
+    console.log('RSC Render', rsc);
+  }
   return rsc;
 }
 
 const root = createRoot(document.getElementById("root"));
 root.render(
-  <Suspense fallback="Loading...">
+  <>
+  <h1>Non-framework React Server Components Example</h1>
+  <h2>Root page has rendered including headers.</h2>
+  <Suspense fallback="Awaiting RSC Response...">
     <App />
   </Suspense>
+  </>
 );
