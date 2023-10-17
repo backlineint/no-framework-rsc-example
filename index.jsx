@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { createFromFetch } from "react-server-dom-webpack/client.browser";
+import Client from "./Client.jsx";
 
 let rsc = null;
-function App() {
+function Server() {
   if (!rsc) {
     rsc = createFromFetch(
       fetch("/app", {
@@ -22,11 +23,15 @@ function App() {
 
 const root = createRoot(document.getElementById("root"));
 root.render(
-  <>
-  <h1>Non-framework React Server Components Example</h1>
-  <h2>Root page has rendered including headers.</h2>
-  <Suspense fallback="Awaiting RSC Response...">
-    <App />
-  </Suspense>
-  </>
+    <div style={{border: '2px solid black', margin: '5px', padding: '5px'}}>
+    <h1>Non-framework RSC Example</h1>
+    <h2>If you can see this, the root page has rendered including headers.</h2>
+    <div style={{border: '2px solid blue', margin: '5px', padding: '5px'}}>
+    <p>This div contains a suspense boundary</p>
+      <Suspense fallback="Awaiting RSC Response...">
+        <Server />
+      </Suspense>
+    </div>
+    <Client />
+  </div>
 );
